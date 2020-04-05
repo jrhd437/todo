@@ -1,0 +1,28 @@
+.alert{
+    padding: 3rem;
+    margin: 0rem 2rem 2rem 2rem;
+    background-color: $warn-light;
+    color: rgb(0, 0, 0);
+    box-shadow: 0px 0px 3px #AAAAAA;
+    border-radius: $default-border-radius;
+}
+
+.alert-title{
+    font-weight: bold;
+}
+
+button.alert-dismiss{
+    border-radius: $default-border-radius;
+    background-color: $accent-color;
+    color: #FFFFFF;
+    padding: 0.5rem 1rem;
+    border: none;
+}
+
+button.alert-dismiss:hover{
+    border-radius: $default-border-radius;
+    background-color: $accent-alt;
+    color: #FFFFFF;
+    padding: 0.5rem 1rem;
+    border: none;
+}

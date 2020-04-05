@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <title>To-Do: Build A To-Do Web-App</title>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <header>
+            <div>
+                <div id="logo">To-Do</div>
+            </div>
+            <nav>
+                <button class="btn btn-success" id="btn-save" v-on:click="explain_save">
+                    <!-- <span v-if="saving"><i class="fas fa-spinner" aria-hidden="true"></i></span> -->
+                    <span><i class="fas fa-info"></i></span>
+                </button>
+                <!-- <button class="btn btn-dark" id="" v-on:click="shuffle">
+                    <i class="fa fa-random" aria-hidden="true"></i>
+                </button> -->
+                <button class="btn btn-info" v-on:click="add_item">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span v-if="tasks.length == 0" class="call-to-action"> Add A Task</span>
+                </button>
+            </nav>
+        </header>
+
+        <div class="container">
+
+            <div class="alert" v-if="alert">
+                <div class="alert-title">{{ alert_title }}</div>
+                <p>{{ alert_message }}</p>
+                <button class="alert-dismiss" v-on:click="dismiss_alert">Dismiss</button>
+            </div>
+
+            <transition-group name="tasks" id="tasks" tag="div" class="row">
+                <div class="card" v-for="(item, index) in todos"
+                    v-bind:key="item"
+                    v-bind:class="[item.Priority > 2 ? 'priority' : item.Priority > 1 ? 'medium' : '']">
+                    <div class="item-pair">
+                        <input type="text" style="flex-grow: 2;"
+                            v-model="item.Title" v-on:change="save" placeholder="Title">
+                        <button class="trash" v-on:click="remove_item(index)"><i
+                                class="fas fa-check"
+                                aria-hidden="true"></i></button>
+                    </div>
+                    <textarea class="" rows="4" v-model="item.Description"
+                        v-on:change="save" placeholder="Description"></textarea>
+                    <input type="range" class="custom-range" min="1" max="3"
+                        v-model="item.Priority" v-on:change="save">
+                </div>
+            </transition-group>
+        </div>
+    </div>
+
+
+    <script type="text/javascript"
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="v.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+    <script>
+
+        if (typeof (Storage) !== "undefined") {
+            console.log("Instantiated.");
+        } else {
+            alert("Your browser is old and does not work with modern tools. Consider switching to a modern, 'ever-green' browser like the latest version of Microsoft EDGE, Google Chrome or Apple Safari.");
+        }
+
+        if (localStorage.tasks != undefined) {
+            var tasks = JSON.parse(localStorage.tasks);
+        } else {
+            var tasks = [];
+        }
+
+        // $("button").click(function () {
+        //     console.log("!!");
+        //     this.blur();
+        // });
+
+
+        new Vue({
+            el: '#app',
+
+            data: {
+                todos: tasks,
+                saving: false,
+                alert: false,
+                alert_title: '',
+                alert_message: ''
+            },
+            methods: {
+                save: function () {
+                    var self = this;
+                    self.saving = true;
+                    var json = JSON.stringify(self.todos);
+                    localStorage.setItem("tasks", json);
+                    self.saving = false;
+                },
+                add_item: function () {
+                    var self = this;
+                    self.todos.push({ 'Title': '', 'Description': '', 'Priority': 1 })
+                    self.save();
+                },
+                remove_item: function (index) {
+                    var self = this;
+                    self.todos.splice(index, 1);
+                    self.save();
+                },
+                shuffle: function () {
+                    var self = this;
+                    self.todos = _.shuffle(self.todos)
+                },
+                explain_save: function () {
+                    var self = this;
+                    self.alert_title = "A Word About Auto-Saving";
+                    self.alert_message = "Each time a change is made to your to-do list, it is automatically saved in local storage. There is no need to save manually. Your to-do list will be here unless/until your local storage data is cleared.";
+                    self.alert = true;
+                },
+                dismiss_alert: function () {
+                    var self = this;
+                    self.alert = false;
+                },
+
+            }
+
+        })
+    </script>
+</body>
+
+</html>

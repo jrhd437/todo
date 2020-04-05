@@ -1,0 +1,117 @@
+@import 'vars';
+
+@import 'range_input';
+
+@import 'header';
+
+@import 'alert';
+
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+body, div, span, p, b, strong, h1, h2, h3, h4 ,h5 ,h6, blockquote, i, button, input, textarea{
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+}
+
+body{
+    background-color: $body_background;
+    margin: 0px;
+    padding: 0px;
+}
+
+.container{
+    padding: 1rem;
+}
+
+.row{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0rem 1rem;
+    @media only screen and (max-width: 800px){
+        flex-direction: column;
+        flex-wrap: nowrap;
+        display: block;
+    }
+}
+
+.row > * > *{
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+.card{
+    flex-basis: 22%;
+    padding: 1rem;
+    box-shadow: 0px 0px 3px #AAAAAA;
+    background-color: $card_background;
+    border-radius: $default-border-radius;
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem auto;
+    @media only screen and (min-width: 1921px){
+        flex-basis: 18%;
+    }
+    @media only screen and (max-width: 1279px){
+        flex-basis: 29%;
+    }
+    @media only screen and (max-width: 1024px){
+        flex-basis: 45%;
+    }
+    @media only screen and (max-width: 800px){
+        flex-basis: 95%;
+    }
+}
+
+.item-pair{
+    display: flex;
+    flex-direction: row;
+}
+
+.trash{
+    flex-grow: 1;
+    background-color: $primary_color;
+    color: white;
+    padding: 0.5rem;
+    border: none;
+}
+
+.trash:hover{
+    background-color: $primary_alt;
+    color: white;
+    padding: 0.5rem;
+    border: none;
+}
+
+
+input[type=text]{
+    flex-grow: 1;
+    background-color: $form_elements_background;
+    color: $text-color;
+    border: none;
+    border-bottom: 1px solid #AAAAAA;
+    padding: 0.4rem;
+    font-weight: bold;
+}
+
+textarea{
+    background-color: $form_elements_background;
+    color: $text-color;
+    border: none;
+    border-bottom: 1px solid #AAAAAA;
+    padding: 0.4rem;
+}
+
+.priority{
+    background-color: $warn;
+}
+
+.medium{
+    background-color: $warn-light;
+}
+
+.call-to-action{
+    color: $warn-light;
+}
